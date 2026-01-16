@@ -54,13 +54,13 @@ body{
 	background-color: var(--cor-virabrequim);
 	position: absolute;
 	left: 0px;
-	bottom: 200px;
+	bottom: 100px;
 }
 .espaco{
 	height: 30px;
 	background-color: var(--cor-virabrequim);
 	position: absolute;
-	bottom: 200px;
+	bottom: 100px;
 }
 .manivela{
 	width: 20px;
