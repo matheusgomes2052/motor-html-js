@@ -1,17 +1,9 @@
-const parametros = new URLSearchParams(window.location.search);
-
-let altura_biela = Number(parametros.get("biela"));
-let pistoes = parametros.get("pistoes").split(" ");
-console.log(pistoes);
-let aneis_quantia = 3; //coloque no máximo 3
-let velocidade = Number(parametros.get("velocidade")) / 10;		
-
 document.addEventListener("DOMContentLoaded", () => {
 	class motor{
 		constructor(angulos){
 			this.angulos_pistoes = angulos;
-			this.velocidade = 30;
-			this.alturaBiela = 80;
+			this.velocidade = 0.5;
+			this.alturaBiela = 150;
 			this.larguraBiela = 20;
 			this.quantia_aneis = 3;
 			this.borda_embaixo = 100;
@@ -27,11 +19,15 @@ document.addEventListener("DOMContentLoaded", () => {
 			this.margemManivela = 4;
 			this.containerMotor = document.querySelector(".container-motor");
 			this.insereEspacador(20, this.grossuraVirabrequim);
-			this.contPistao = 1;
+			this.contPistao = 1;			
+			this.alturaManivela = ((this.alturaBiela / 2) + this.alturaBronzina - this.margemManivela);
+			this.variacao = (((this.alturaBronzina - this.grossuraVirabrequim) / 2) + this.alturaManivela - this.alturaBronzina);
+			console.log(this.variacao);
 			this.angulos_pistoes.forEach((angulo) => {
 				this.anguloPistaoForeach = angulo;
 				this.insereManivela(this.larguraManivela);
-				this.inserePistao();
+				this.insereCamisa();
+				this.inserePistao();				
 				this.insereManivela(this.larguraManivela);
 				this.insereEspacador(20, this.grossuraVirabrequim);
 				this.contPistao++;
@@ -85,6 +81,19 @@ document.addEventListener("DOMContentLoaded", () => {
 			this.left_quantia = this.left_quantia + this.larguraBronzina;
 			this.containerMotor.appendChild(pistao);
 		}
+		insereCamisa(){
+			let camisa = document.createElement("div");
+			camisa.className = "camisa";
+			camisa.style.width = (this.larguraCabecaPistao + 4) + "px";
+			this.alturaCamisa = (2 * this.alturaManivela) + 10;
+			camisa.style.height = this.alturaCamisa + "px";
+			camisa.style.left = (this.left_quantia - ((this.larguraCabecaPistao - this.larguraBronzina) / 2) - 2) + "px";
+			camisa.style.bottom = (this.borda_embaixo + this.variacao + this.grossuraVirabrequim + this.margemManivela) + "px";
+			this.containerMotor.appendChild(camisa);
+		}
+		atualizaPecas(){
+
+		}
 		trave(){
 			this.paraMotor = 1;
 		}
@@ -96,8 +105,8 @@ document.addEventListener("DOMContentLoaded", () => {
 				let anguloPistao = (Number(pistao.dataset.angulo) + this.anguloAtual) % 360;
 				this.radiano = (anguloPistao / 180) * Math.PI;
 				this.cos = Math.cos(this.radiano);				
-				let alturaManivela = ((this.alturaBiela / 2) + this.alturaBronzina - this.margemManivela);
-				let alturaAtualManivela = (((alturaManivela - this.grossuraVirabrequim) * Math.abs(this.cos)) + this.grossuraVirabrequim);
+				this.alturaManivela = ((this.alturaBiela / 2) + this.alturaBronzina - this.margemManivela);
+				let alturaAtualManivela = (((this.alturaManivela - this.grossuraVirabrequim) * Math.abs(this.cos)) + this.grossuraVirabrequim);
 				document.querySelectorAll("[data-num-pistao='"+numPistao+"']").forEach((manivela) => {
 					manivela.style.height = alturaAtualManivela + "px";
 					if (anguloPistao > 270 || anguloPistao < 90){
@@ -106,10 +115,14 @@ document.addEventListener("DOMContentLoaded", () => {
 						manivela.style.bottom = (this.borda_embaixo - alturaAtualManivela + this.grossuraVirabrequim) + "px";
 					}
 				})
-				let variacao = (((this.alturaBronzina - this.grossuraVirabrequim) / 2) + alturaManivela - this.alturaBronzina) * -1;
-				pistao.style.transform = "translateY("+(variacao * this.cos)+"px)";
+				this.variacao = (((this.alturaBronzina - this.grossuraVirabrequim) / 2) + this.alturaManivela - this.alturaBronzina) * -1;
+				console.log("alt: "+this.alturaManivela+" var: "+this.variacao);
+				pistao.style.transform = "translateY("+(this.variacao * this.cos)+"px)";
+				if (anguloPistao == 0 || anguloPistao == 180){
+					// console.log((this.variacao * this.cos));
+				}
 			})
-
+			this.atualizaPecas();
 			if (this.paraMotor == 0){
 				setTimeout(() => this.gire(), 0);
 			}else{
@@ -117,6 +130,6 @@ document.addEventListener("DOMContentLoaded", () => {
 			}
 		}
 	}
-
+	let pistoes = [270, 180, 90, 0];
 	let motor_obj = new motor(pistoes);
 })

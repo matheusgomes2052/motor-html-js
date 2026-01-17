@@ -24,6 +24,10 @@ body{
 	left: 165px;
 	bottom: 100px;
 }
+.camisa{
+	background-color: #a5a5a5;
+	position: absolute;
+}
 .cabeca{
 	width: 80px;
 	height: 60px;
