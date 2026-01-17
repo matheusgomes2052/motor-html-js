@@ -114,3 +114,27 @@ h3{
 	font-family: "Roboto", sans-serif;
 	font-weight: 500;
 }
+.cabecote{
+	background-color: lightgray;
+	position: absolute;
+	display: flex;
+	justify-content: space-around;
+	align-items: end;
+}
+.valvula{
+	height: 100%;
+	display: flex;
+	width: 30%;
+	flex-direction: column;
+	align-items: center;
+}
+.corpo-valvula{
+	background-color: black;
+	width: 30%;
+	height: 94%;
+}
+.ponta-valvula{
+	width: 100%;
+	height: 6%;
+	background-color: black;
+}

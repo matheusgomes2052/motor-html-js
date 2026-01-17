@@ -14,11 +14,15 @@
 	<div class="painel-controle">
 		<div class="grupo-selecao">
 			<label class="titulo-label">Velocidade</label>
-			<input type="range" id="velocidade" name="velocidade" value="10" min="0" max="400">
+			<input type="range" id="velocidade" name="velocidade" value="10" min="0" max="300">
 		</div>
 		<div class="grupo-selecao">
 			<label class="titulo-label">Tamanho da Biela</label>
-			<input type="range" name="biela" id="biela" min="50" max="150">
+			<input type="range" name="biela" id="biela" min="50" value="80" max="150">
+		</div>
+		<div class="grupo-selecao">
+			<label class="titulo-label">Caminho das válvulas</label>
+			<input type="range" name="valvula" id="valvula" min="2" value="50" max="100">
 		</div>
 		<div class="container-inputs-pistoes">
 			<label class="titulo-label">Pistões</label>
@@ -34,6 +38,6 @@
 		</div>
 
 	</div>
-	<iframe id="iframe" width="500" height="600" src="motor.html?biela=80&velocidade=10&pistoes=0+90+270+135"></iframe>
+	<iframe id="iframe" width="500" height="600" src="motor.html?biela=80&valvula=50&velocidade=10&pistoes=0+90+270+135"></iframe>
 </body>
 </html>
